@@ -1,19 +1,22 @@
-import { useContext } from "react";
-import { CartContext } from "../../contexts/cart.context";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import Button from "../button/button.component";
-import CartItem from "../cart-item/cart-item.component";
+import { selectCartItems } from '../../store/cart/cart.selector';
+import Button from '../button/button.component';
+import CartItem from '../cart-item/cart-item.component';
 
-
-import {CartDropdownContainer, EmptyMessage, CartItems} from "./cart-dropdown.styles";
+import {
+  CartDropdownContainer,
+  EmptyMessage,
+  CartItems,
+} from './cart-dropdown.styles';
 
 const CartDropdown = () => {
-  const { cartItems } = useContext(CartContext);
+  const cartItems = useSelector(selectCartItems);
   const navigate = useNavigate();
 
   const goToCheckoutHandler = () => {
-    navigate("/checkout");
+    navigate('/checkout');
   };
 
   return (
@@ -22,10 +25,10 @@ const CartDropdown = () => {
         {cartItems.length ? (
           cartItems.map((item) => <CartItem key={item.id} cartItem={item} />)
         ) : (
-          <EmptyMessage> Your cart is empty</EmptyMessage>
+          <EmptyMessage>Your cart is empty</EmptyMessage>
         )}
       </CartItems>
-      <Button onClick={goToCheckoutHandler}>Checkout</Button>
+      <Button onClick={goToCheckoutHandler}>GO TO CHECKOUT</Button>
     </CartDropdownContainer>
   );
 };
